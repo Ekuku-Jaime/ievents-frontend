@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom';
+import { NavLink as RouterLink, matchPath, useLocation, useMatch } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify/icons-eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
 // material
@@ -155,7 +155,8 @@ NavSection.propTypes = {
 
 export default function NavSection({ navConfig, ...other }) {
   const { pathname } = useLocation();
-  const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
+  const match = (path) => (path ? !!matchPath({ path, end: true }, pathname) : false);
+  // const match = useMatch({ path: pathname, end: true });
 
   return (
     <Box {...other}>

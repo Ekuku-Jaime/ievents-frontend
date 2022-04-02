@@ -1,40 +1,53 @@
+import { Form, FormikProvider, useFormik } from 'formik';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { TextField, Stack, InputAdornment, IconButton } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { Icon } from '@iconify/react';
-import { useFormik, Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { useNavigate } from 'react-router-dom';
-// material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-
-// ----------------------------------------------------------------------
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { authActions } from '../../../actions';
 
 export default function RegisterForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const { register } = bindActionCreators(authActions, dispatch);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('First name required'),
-    lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    nome: Yup.string()
+      .min(2, 'Muito curto!')
+      .max(50, 'Muito longo!')
+      .required('O primeiro nome e obrigatorio'),
+    apelido: Yup.string()
+      .min(2, 'Muito curto!')
+      .max(50, 'Muito longo!')
+      .required('O apelido e obrigatorio'),
+    turma: Yup.string()
+      .min(3, 'Muito curto!')
+      .max(7, 'Muito longo')
+      .required('A turma e obrigatoria'),
+    email: Yup.string().email('Deve ser um email valido').required('O Email e obrigatorio'),
+    password: Yup.string().required('Password is required'),
+    re_password: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
   });
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      nome: '',
+      apelido: '',
+      codigo: '',
+      turma: '',
       email: '',
-      password: ''
+      password: '',
+      re_password: ''
     },
     validationSchema: RegisterSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values) => {
+      //   navigate("/dashboard", { replace: true });
+      register(values);
     }
   });
 
@@ -48,17 +61,34 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               label="First name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
+              {...getFieldProps('nome')}
+              error={Boolean(touched.nome && errors.nome)}
+              helperText={touched.nome && errors.nome}
             />
 
             <TextField
               fullWidth
               label="Last name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
+              {...getFieldProps('apelido')}
+              error={Boolean(touched.apelido && errors.apelido)}
+              helperText={touched.apelido && errors.apelido}
+            />
+          </Stack>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              fullWidth
+              label="Codigo de estudante"
+              {...getFieldProps('codigo')}
+              error={Boolean(touched.nome && errors.nome)}
+              helperText={touched.nome && errors.nome}
+            />
+
+            <TextField
+              fullWidth
+              label="Turma"
+              {...getFieldProps('turma')}
+              error={Boolean(touched.turma && errors.turma)}
+              helperText={touched.turma && errors.turma}
             />
           </Stack>
 
@@ -71,25 +101,44 @@ export default function RegisterForm() {
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
           />
-
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                    <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+              fullWidth
+              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              label="Password"
+              {...getFieldProps('password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+            <TextField
+              fullWidth
+              autoComplete="current-password"
+              type={showPassword ? 'text' : 'password'}
+              label="Confirm password"
+              {...getFieldProps('re_password')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              error={Boolean(touched.password && errors.password)}
+              helperText={touched.password && errors.password}
+            />
+          </Stack>
 
           <LoadingButton
             fullWidth
@@ -98,7 +147,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Register
+            Registe-se
           </LoadingButton>
         </Stack>
       </Form>

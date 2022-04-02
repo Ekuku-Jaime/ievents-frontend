@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
+
+import { authActions } from '../../actions';
 
 // ----------------------------------------------------------------------
 
@@ -34,11 +38,19 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const { loadUser, logout } = bindActionCreators(authActions, dispatch);
 
+  useEffect(() => {
+    loadUser();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
   return (
     <RootStyle>
-      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardNavbar onOpenSidebar={() => setOpen(true)} user={user} logout={logout} />
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} user={user} />
       <MainStyle>
         <Outlet />
       </MainStyle>

@@ -29,11 +29,11 @@ const GREY = {
 };
 
 const PRIMARY = {
-  lighter: '#C8FACD',
-  light: '#5BE584',
-  main: '#00AB55',
-  dark: '#007B55',
-  darker: '#005249',
+  lighter: '#ff8a65',
+  light: '#ff5722',
+  main: '#e64a19',
+  dark: '#d84315',
+  darker: '#bf360c',
   contrastText: '#fff'
 };
 const SECONDARY = {

@@ -4,6 +4,9 @@ import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { bindActionCreators } from 'redux';
 // components
 import { MHidden } from '../../components/@material-extend';
 //
@@ -11,6 +14,8 @@ import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import NotificationsPopover from './NotificationsPopover';
+
+import { authActions } from '../../actions';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +47,7 @@ DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar({ onOpenSidebar, user, logout }) {
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -56,9 +61,9 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <LanguagePopover />
-          <NotificationsPopover />
-          <AccountPopover />
+          {/* <LanguagePopover />
+          <NotificationsPopover /> */}
+          <AccountPopover user={user} logout={logout} />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

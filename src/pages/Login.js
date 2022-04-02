@@ -1,4 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+// redux
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 // material
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography } from '@mui/material';
@@ -40,19 +43,32 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log('uas');
+      console.log(isAuthenticated);
+      navigate('/');
+    } else {
+      console.log('els');
+      console.log(isAuthenticated);
+    }
+  }, [isAuthenticated]);
+
   return (
     <RootStyle title="Login | Minimal-UI">
       <AuthLayout>
-        Don’t have an account? &nbsp;
+        Nao tem uma conta? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
+          Crie Uma
         </Link>
       </AuthLayout>
 
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
+            Bem Vindo!
           </Typography>
           <img src="/static/illustrations/illustration_login.png" alt="login" />
         </SectionStyle>
@@ -62,19 +78,19 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Veja os seus eventos
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Ensira suas credenciais.</Typography>
           </Stack>
-          <AuthSocial />
+          {/* <AuthSocial /> */}
 
           <LoginForm />
 
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
+              Nao tem conta?&nbsp;
+              <Link variant="subtitle2" component={RouterLink} to="/register">
+                Crie uma
               </Link>
             </Typography>
           </MHidden>

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -16,16 +16,33 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { authActions } from '../../../actions';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
+  function usePrevious(value) {
+    const ref = useRef();
+
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+
+    return ref.current;
+  }
+  const dispatch = useDispatch();
+  const { login } = bindActionCreators(authActions, dispatch);
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required')
+    email: Yup.string()
+      .email('O enderenco de elecronico deve ser valido')
+      .required('Email e obrigatorio'),
+    password: Yup.string().required('A senha e obrigatoria')
   });
 
   const formik = useFormik({
@@ -35,8 +52,17 @@ export default function LoginForm() {
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: () => {
-      navigate('/dashboard', { replace: true });
+    onSubmit: (values, { setSubmitting }) => {
+      // login(values.email, values.password);
+      setTimeout(() => {
+        login(values);
+        setSubmitting(false);
+        setLoginError(true);
+      }, 500);
+
+      // console.log(values.email);
+      // console.log(values.password);
+      // navigate('/dashboard', { replace: true });
     }
   });
 
@@ -54,7 +80,7 @@ export default function LoginForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label="Email"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
@@ -64,7 +90,7 @@ export default function LoginForm() {
             fullWidth
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
-            label="Password"
+            label="Senha"
             {...getFieldProps('password')}
             InputProps={{
               endAdornment: (
@@ -78,16 +104,19 @@ export default function LoginForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
+          {loginError && (
+            <span style={{ color: 'red', textAlign: 'center' }}>Email ou senha incorrecta</span>
+          )}
         </Stack>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
           <FormControlLabel
             control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
+            label="Lembre-se"
           />
 
           <Link component={RouterLink} variant="subtitle2" to="#">
-            Forgot password?
+            Esqueceu-se da senha?
           </Link>
         </Stack>
 
