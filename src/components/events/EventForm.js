@@ -92,7 +92,7 @@ export default function EventForm() {
         addEvent(values);
         setSubmitting(false);
       }, 500);
-      navigate('/dashboard/events/new', { replace: true });
+      navigate('/events', { replace: true });
     }
   });
 
@@ -148,7 +148,7 @@ export default function EventForm() {
                         mb: 2
                       }}
                       alt="The house from the offer."
-                      src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+                      src="/static/empty.jpg"
                       // src={preview}
                     />
                   )}
@@ -211,17 +211,27 @@ export default function EventForm() {
                   )}
                 />
               </Stack>
-              <MSelect
-                fullWidth
-                name="type"
-                {...getFieldProps('type')}
-                label="Tipo de evento"
-                // value={formik.values.type}
-                options={eventsServices.getEventsTypes()}
-                // onChange={handleInputChange}
-                error={Boolean(touched.type && errors.type)}
-                helperText={touched.type && errors.type}
-              />
+              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
+                  fullWidth
+                  label="Local/Sala"
+                  {...getFieldProps('local')}
+                  error={Boolean(touched.local && errors.local)}
+                  helperText={touched.local && errors.local}
+                />
+                <MSelect
+                  fullWidth
+                  name="type"
+                  {...getFieldProps('type')}
+                  label="Tipo de evento"
+                  // value={formik.values.type}
+                  options={eventsServices.getEventsTypes()}
+                  // onChange={handleInputChange}
+                  error={Boolean(touched.type && errors.type)}
+                  helperText={touched.type && errors.type}
+                />
+              </Stack>
+
               {formik.values.type === 'Palestra' && (
                 <TextField
                   fullWidth

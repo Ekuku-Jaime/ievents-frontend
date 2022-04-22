@@ -30,8 +30,15 @@ export default function RegisterForm() {
       .max(7, 'Muito longo')
       .required('A turma e obrigatoria'),
     email: Yup.string().email('Deve ser um email valido').required('O Email e obrigatorio'),
-    password: Yup.string().required('Password is required'),
-    re_password: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+    password: Yup.string()
+      .required('Escreva uma senha')
+      .min(8, 'Senha muito curta - deve conter no minimo 8 caracteres.')
+      .matches(/(?=.*[0-9])/, 'A senha deve ter um numero.'),
+    re_password: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'As senhas devem ser iguais')
+      .required('Escreva uma senha.')
+      .min(8, 'Senha muito curta - deve conter no minimo 8 caracteres.')
+      .matches(/(?=.*[0-9])/, 'A senha deve ter um numero.')
   });
 
   const formik = useFormik({
@@ -60,7 +67,7 @@ export default function RegisterForm() {
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
-              label="First name"
+              label="Nome"
               {...getFieldProps('nome')}
               error={Boolean(touched.nome && errors.nome)}
               helperText={touched.nome && errors.nome}
@@ -68,7 +75,7 @@ export default function RegisterForm() {
 
             <TextField
               fullWidth
-              label="Last name"
+              label="Apelido"
               {...getFieldProps('apelido')}
               error={Boolean(touched.apelido && errors.apelido)}
               helperText={touched.apelido && errors.apelido}
@@ -96,7 +103,7 @@ export default function RegisterForm() {
             fullWidth
             autoComplete="username"
             type="email"
-            label="Email address"
+            label="Email"
             {...getFieldProps('email')}
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
@@ -106,7 +113,7 @@ export default function RegisterForm() {
               fullWidth
               autoComplete="current-password"
               type={showPassword ? 'text' : 'password'}
-              label="Password"
+              label="Senha"
               {...getFieldProps('password')}
               InputProps={{
                 endAdornment: (
@@ -124,7 +131,7 @@ export default function RegisterForm() {
               fullWidth
               autoComplete="current-password"
               type={showPassword ? 'text' : 'password'}
-              label="Confirm password"
+              label="Confirmar senha"
               {...getFieldProps('re_password')}
               InputProps={{
                 endAdornment: (
@@ -135,8 +142,8 @@ export default function RegisterForm() {
                   </InputAdornment>
                 )
               }}
-              error={Boolean(touched.password && errors.password)}
-              helperText={touched.password && errors.password}
+              error={Boolean(touched.re_password && errors.re_password)}
+              helperText={touched.re_password && errors.re_password}
             />
           </Stack>
 
@@ -147,7 +154,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Registe-se
+            Criar Conta
           </LoadingButton>
         </Stack>
       </Form>

@@ -37,6 +37,9 @@ function Alerts({ alert }) {
     if (msg?.eventDeleted) {
       alert.success(msg.eventDeleted);
     }
+    if (msg?.requestLoaded) {
+      alert.success(msg.requestLoaded);
+    }
   }
 
   return <></>;

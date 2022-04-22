@@ -32,7 +32,6 @@ export default function EventRequest() {
   const dispatch = useDispatch();
   const { getRequests } = bindActionCreators(requestActions, dispatch);
 
-  const use = useSelector((state) => state.auth.user);
   const requests = useSelector((state) => state.requests.requests);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function EventRequest() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" sx={{ color: 'text.secondary' }}>
-              Faca um pedido para que se aprove um evento que voce deseja organizar.
+              Faça um pedido para que se aprove um evento que você deseja organizar.
             </Typography>
           </Stack>
           <EventRequestForm />
@@ -58,7 +57,7 @@ export default function EventRequest() {
             </div>
           ) : (
             <Typography variant="h5" sx={{ color: 'text.secondary', mt: 3 }}>
-              Ainda nao fez nenhum pedido
+              Ainda não fez nenhum pedido
             </Typography>
           )}
         </ContentStyle>

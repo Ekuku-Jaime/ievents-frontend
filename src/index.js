@@ -14,9 +14,9 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <HelmetProvider>
-    {/* <BrowserRouter> */}
-    <App />
-    {/* </BrowserRouter> */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </HelmetProvider>,
   document.getElementById('root')
 );

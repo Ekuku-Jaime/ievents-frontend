@@ -1,13 +1,6 @@
 import axios from 'axios';
 
-import {
-  DELETE_EVENT,
-  GET_EVENT,
-  GET_EVENTS,
-  EDIT_EVENT,
-  ADD_EVENT,
-  LOGOUT_SUCCESS
-} from './types';
+import { DELETE_EVENT, GET_EVENT, GET_EVENTS, EDIT_EVENT, ADD_EVENT } from './types';
 import { createMessage } from './messages';
 
 export const getEvents = () => (dispatch) => {
@@ -20,7 +13,6 @@ export const getEvents = () => (dispatch) => {
     .get('http://localhost:8000/api/events/', config)
     .then((response) => {
       dispatch({ type: GET_EVENTS, payload: response.data });
-      dispatch(createMessage({ diaryAdded: 'Events Loaded' }));
     })
     .catch((error) => error.response.data);
 };
@@ -30,8 +22,12 @@ export const addEvent = (formValues) => (dispatch) => {
   formData.append('name', formValues.image.name);
   formData.append('image', formValues.image);
   formData.append('title', formValues.title);
+  formData.append('student_name', formValues.studentName);
+  formData.append('panelist', formValues.panelist);
   formData.append('description', formValues.description);
   formData.append('initial_date', formValues.initialDate);
+  formData.append('end_date', formValues.endDate);
+  formData.append('local', formValues.local);
   formData.append('type', formValues.type);
 
   const config = {
@@ -51,8 +47,8 @@ export const addEvent = (formValues) => (dispatch) => {
 export const getEvent = (id) => (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `JWT ${localStorage.getItem('access')}`
+      'Content-Type': 'multipart/form-data'
+      // Authorization: `JWT ${localStorage.getItem('access')}`
     }
   };
   axios
@@ -97,6 +93,7 @@ export const editEvent = (id, formValues) => (dispatch) => {
   formData.append('description', formValues.description);
   formData.append('initial_date', formValues.initialDate);
   formData.append('end_date', formValues.endDate);
+  formData.append('local', formValues.local);
   formData.append('type', formValues.type);
   axios
     .patch(`http://localhost:8000/api/events/${id}/`, formData, config)
@@ -105,6 +102,7 @@ export const editEvent = (id, formValues) => (dispatch) => {
         type: EDIT_EVENT,
         payload: response.data
       });
+      dispatch(createMessage({ eventEdited: 'Evento editado com sucesso' }));
     })
     .catch((error) => {
       console.log(error);

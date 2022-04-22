@@ -27,8 +27,8 @@ export const getMinuteds = () => (dispatch) => {
 export const addMinuted = (formValues, event) => (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data'
-      // Authorization: `JWT ${localStorage.getItem('access')}`
+      'Content-Type': 'multipart/form-data',
+      Authorization: `JWT ${localStorage.getItem('access')}`
     }
   };
   const form = new FormData();

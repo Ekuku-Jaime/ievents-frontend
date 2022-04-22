@@ -14,22 +14,22 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 const sidebarConfig = [
   {
     title: 'dashboard',
-    path: '/dashboard/app',
+    path: 'app',
     icon: getIcon(pieChart2Fill)
   },
   {
     title: 'eventos',
-    path: '/dashboard/events',
+    path: 'events',
     icon: getIcon(peopleFill)
   },
   {
     title: 'novo evento',
-    path: '/dashboard/events/new',
+    path: 'events/new',
     icon: getIcon(shoppingBagFill)
   },
   {
     title: 'mensagens',
-    path: '/dashboard/events/requests',
+    path: 'events/requests',
     icon: getIcon(fileTextFill)
   }
 ];

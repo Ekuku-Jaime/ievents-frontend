@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Paper, Typography } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Parallax } from 'react-parallax';
+import { Background, Parallax } from 'react-parallax';
+// import { Parallax } from 'react-scroll-parallax';
 import { makeStyles } from '@mui/styles';
 import MobileEvent from '../components/front_office/display/MobileEvent';
 import TabDeskEvent from '../components/front_office/display/TabDeskEvent';
@@ -11,6 +12,7 @@ import TabOnly from '../components/front_office/display/TabOnly';
 import { eventActions, userEventsActions } from '../actions/index';
 import Layout from '../components/front_office/Layout';
 import Footer from '../layouts/Footer';
+import Langing from './Langing';
 
 const useStyles = makeStyles({
   root: {
@@ -25,6 +27,14 @@ const useStyles = makeStyles({
   text: {
     fontFamily: 'sans-serif',
     textAlign: 'center'
+  },
+  footer: {
+    height: '10vh',
+    margin: 'auto',
+    background: '#ff5722',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center'
   }
 });
 export default function Home() {
@@ -47,12 +57,20 @@ export default function Home() {
   return (
     <>
       <Layout />
-      <Container sx={{ mt: 5 }}>
-        <Parallax bgImage="/static/mock-images/covers/home.jpg" strength={500}>
+      <Langing />
+      <Container sx={{ mt: 4 }}>
+        {/* <Parallax
+          bgImage="/static/mock-images/covers/main.jpg"
+          strength={200}
+          bgImageStyle={{ height: '100%', width: '90%' }}
+        >
           <div style={{ height: 500 }}>
             <div className={styles.root}>Bem vindo ao nossos website eventos</div>
           </div>
-        </Parallax>
+        </Parallax> */}
+        <Typography sx={{ textAlign: 'center', fontSize: '2rem', color: 'text.secondary' }}>
+          Proximos Eventos
+        </Typography>
         <div style={{ marginTop: '50px' }}>
           <TabDeskEvent
             events={events}
@@ -68,12 +86,17 @@ export default function Home() {
           />
         </div>
       </Container>
+      {/* this footer is for large devices */}
+      <footer className={styles.footer}>
+        <div>ISCIM - Todos direitos reservados - 2022</div>
+      </footer>
       <MobileEvent
         events={events}
         user={user?.id}
         userEvents={userEvents}
         isAuthenticated={isAuthenticated}
       />
+      {/* this footer is only aplied on mobile devices */}
       <Footer value={0} />
     </>
   );

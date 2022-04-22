@@ -39,8 +39,6 @@ export default function EventsRequests() {
 
   useEffect(() => {
     getRequests();
-    console.log(requests);
-    console.log('op');
   }, [dispatch]);
   const formik = useFormik({
     initialValues: {
@@ -77,10 +75,10 @@ export default function EventsRequests() {
           <AccordionDetails>
             <Typography sx={{ mb: 2 }}>
               {request.description}
-              <div style={{ marginTop: '16px' }}>
-                Pedido por: {request?.user.nome} {request.user.apelido}
-                Turma: <span style={{ textTransform: 'uppercase' }}> {request.user.turma}</span>
-              </div>
+              <span style={{ marginTop: '16px' }}>
+                Pedido por: {request?.user.nome} {request.user.apelido} Turma:{' '}
+                <span style={{ textTransform: 'uppercase' }}> {request.user.turma}</span>
+              </span>
             </Typography>
 
             <FormikProvider value={formik}>

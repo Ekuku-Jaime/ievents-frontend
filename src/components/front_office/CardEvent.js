@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import { useAlert } from 'react-alert';
 
 import { userEventsActions } from '../../actions';
@@ -125,7 +125,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     textTransform: 'initial'
   }
 }));
-
+moment.locale('pt');
 export default function CardEvent({ event, userEvents, user, isAuthenticated }) {
   const navigate = useNavigate();
   const alert = useAlert();
@@ -136,7 +136,7 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
 
   const checkEvent = (id) => {
     const even = userEvents.filter((eve) => eve?.evento.id === id && eve?.user === user);
-    console.log(event.length, 'evento:', event, 'user:', user?.id);
+
     if (even.length > 0) {
       return true;
     }
@@ -152,7 +152,7 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
         <Typography textAlign="justify" fontSize="1.2rem">
           {event.title}
         </Typography>
-        <div style={{ color: 'orange', fontSize: '0.8rem' }}>
+        <div style={{ color: '#e64a19', fontSize: '0.8rem' }}>
           {moment(event.initial_date).format('lll')}-{moment(event.end_date).format('lll')}
         </div>
         <Button
@@ -166,13 +166,9 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
         </Button>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Tooltip title="guardar no calendario">
-            {/* <AddBox fontSize="large"/> */}
             <IconButton
               color="primary"
               onClick={() => {
-                // console.log(event.id, user.id);
-                // console.log(checkEvent(event.id));
-
                 if (checkEvent(event.id) === true) {
                   alert.error('Ja adicionou este evento');
                 }

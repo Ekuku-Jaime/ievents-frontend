@@ -97,9 +97,12 @@ export default function EventEdit({ id }) {
     initialValues: { ...mk },
 
     validationSchema: RegisterSchema,
-    onSubmit: (values) => {
-      editEvent(id, values);
-      navigate('/dashboard/events', { replace: true });
+    onSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        editEvent(id, values);
+        setSubmitting(false);
+      }, 500);
+      navigate('/events', { replace: true });
     }
   });
 

@@ -15,7 +15,6 @@ import {
 } from './types';
 
 export const loadUser = () => (dispatch) => {
-  const acesso = `JWT ${localStorage.getItem('access')}`;
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -99,7 +98,7 @@ export const register = (values) => async (dispatch) => {
         });
         dispatch(loadUser());
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch({
           type: SIGNUP_FAIL
         });
@@ -136,12 +135,12 @@ export const verify = (uid, token) => async (dispatch) => {
   const body = JSON.stringify({ uid, token });
   await axios
     .post('http://localhost:8000/auth/users/activation/', body, config)
-    .then((response) => {
+    .then(() => {
       dispatch({
         type: ACTIVATION_SUCCESS
       });
     })
-    .catch((error) => {
+    .catch(() => {
       dispatch({
         type: ACTIVATION_FAIL
       });
@@ -167,7 +166,7 @@ export const checkAuthenticated = () => async (dispatch) => {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch({
           type: AUTHENTICATED_FAIL
         });

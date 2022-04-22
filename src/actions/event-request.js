@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { accessConfig } from './auth';
 import { GET_REQUESTS, CREATE_REQUEST } from './types';
 import { createMessage, returnError } from './messages';
 
@@ -14,6 +13,7 @@ export const getRequests = () => (dispatch) => {
     .get('http://localhost:8000/api/getpedidos/', config)
     .then((response) => {
       dispatch({ type: GET_REQUESTS, payload: response.data });
+      dispatch(createMessage({ requestLoaded: 'requests loaded' }));
     })
     .catch((error) => console.log(error.status));
 };
@@ -33,6 +33,7 @@ export const addRequest = (formValues, user) => (dispatch) => {
     .post('http://localhost:8000/api/pedidos/', form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
+      dispatch(createMessage({ requested: 'Pedido feito com sucesso' }));
     })
     .catch((error) => returnError(error.response.data, error.response.status));
 };

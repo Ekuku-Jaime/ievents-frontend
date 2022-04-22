@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useEffect, useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -16,26 +16,15 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authActions } from '../../../actions';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  // const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState(false);
-
-  function usePrevious(value) {
-    const ref = useRef();
-
-    useEffect(() => {
-      ref.current = value;
-    }, [value]);
-
-    return ref.current;
-  }
   const dispatch = useDispatch();
   const { login } = bindActionCreators(authActions, dispatch);
   const LoginSchema = Yup.object().shape({
@@ -53,16 +42,11 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
-      // login(values.email, values.password);
       setTimeout(() => {
         login(values);
         setSubmitting(false);
         setLoginError(true);
       }, 500);
-
-      // console.log(values.email);
-      // console.log(values.password);
-      // navigate('/dashboard', { replace: true });
     }
   });
 
@@ -115,7 +99,7 @@ export default function LoginForm() {
             label="Lembre-se"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#">
+          <Link component={RouterLink} variant="subtitle2" to="/passwordreset">
             Esqueceu-se da senha?
           </Link>
         </Stack>

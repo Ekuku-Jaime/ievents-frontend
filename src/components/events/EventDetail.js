@@ -138,7 +138,7 @@ const EventDetail = () => {
           </Grid>
           <Grid item md={6} mt={2} xs={12}>
             <Typography variant="h6">
-              Descricao
+              Descrição
               <Typography textAlign="justify">{evento[params.id]?.description}</Typography>
             </Typography>
           </Grid>
@@ -292,17 +292,13 @@ const useStyles = makeStyles({
   body: {
     border: 'none',
     margin: '20px 0 20px',
-    input: {
-      height: 400,
-      backgroundRepeat: 'no-repeat'
-    },
 
     '& .dropzone ': {
-      height: '200px !important',
-      border: 'none !important',
+      height: '150px !important',
+      border: 'none !important'
       // eslint-disable-next-line no-useless-concat
-      backgroundImage: 'url(' + '/static/icons/dropbox.png' + ')',
-      backgroundRepeat: 'no-repeat'
+      // backgroundImage: 'url(' + '/static/icons/dropbox.png' + ')',
+      // backgroundRepeat: 'no-repeat'
       // backgroundImage: '"/static/mock-images/avatars/avatar_default.jpg"',
     }
   }
