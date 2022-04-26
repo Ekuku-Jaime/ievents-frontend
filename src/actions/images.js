@@ -14,7 +14,7 @@ export const addEventImages = (id, formValues) => (dispatch) => {
   });
 
   axios
-    .post(`${process.env.API}/api/images/`, formData, config)
+    .post(`${process.env.REACT_APP_API}/api/images/`, formData, config)
     .then((response) => {
       dispatch({ type: ADD_IMAGE, payload: response.data });
       console.log('images added');
@@ -29,7 +29,7 @@ export const getImages = () => (dispatch) => {
     }
   };
   axios
-    .get(`${process.env.API}/api/images/`, config)
+    .get(`${process.env.REACT_APP_API}/api/images/`, config)
     .then((response) => {
       dispatch({ type: GET_IMAGES, payload: response.data });
     })

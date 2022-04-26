@@ -10,7 +10,7 @@ export const getEvents = () => (dispatch) => {
     }
   };
   axios
-    .get(`${process.env.API}/api/events/`, config)
+    .get(`${process.env.REACT_APP_API}/api/events/`, config)
     .then((response) => {
       dispatch({ type: GET_EVENTS, payload: response.data });
     })
@@ -37,7 +37,7 @@ export const addEvent = (formValues) => (dispatch) => {
     }
   };
   axios
-    .post(`${process.env.API}/api/events/`, formData, config)
+    .post(`${process.env.REACT_APP_API}/api/events/`, formData, config)
     .then((response) => {
       dispatch({ type: ADD_EVENT, payload: response.data });
     })
@@ -52,7 +52,7 @@ export const getEvent = (id) => (dispatch) => {
     }
   };
   axios
-    .get(`${process.env.API}/api/events/${id}`, config)
+    .get(`${process.env.REACT_APP_API}/api/events/${id}`, config)
     .then((response) => {
       dispatch({
         type: GET_EVENT,
@@ -69,7 +69,7 @@ export const deleteEvent = (id) => (dispatch) => {
     }
   };
   axios
-    .delete(`${process.env.API}/api/events/${id}`, config)
+    .delete(`${process.env.REACT_APP_API}/api/events/${id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_EVENT
@@ -96,7 +96,7 @@ export const editEvent = (id, formValues) => (dispatch) => {
   formData.append('local', formValues.local);
   formData.append('type', formValues.type);
   axios
-    .patch(`${process.env.API}/api/events/${id}/`, formData, config)
+    .patch(`${process.env.REACT_APP_API}/api/events/${id}/`, formData, config)
     .then((response) => {
       dispatch({
         type: EDIT_EVENT,

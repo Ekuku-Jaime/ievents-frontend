@@ -10,7 +10,7 @@ export const getRequests = () => (dispatch) => {
     }
   };
   axios
-    .get(`${process.env.API}/api/getpedidos/`, config)
+    .get(`${process.env.REACT_APP_API}/api/getpedidos/`, config)
     .then((response) => {
       dispatch({ type: GET_REQUESTS, payload: response.data });
       dispatch(createMessage({ requestLoaded: 'requests loaded' }));
@@ -30,7 +30,7 @@ export const addRequest = (formValues, user) => (dispatch) => {
   form.append('description', formValues.description);
   form.append('user', Number(user));
   axios
-    .post(`${process.env.API}/api/pedidos/`, form, config)
+    .post(`${process.env.REACT_APP_API}/api/pedidos/`, form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
       dispatch(createMessage({ requested: 'Pedido feito com sucesso' }));
@@ -49,7 +49,7 @@ export const acceptRequest = (formValues, id) => (dispatch) => {
   form.append('status', 'accepted');
   form.append('response', formValues.response);
   axios
-    .patch(`${process.env.API}/api/pedidos/${id}/`, form, config)
+    .patch(`${process.env.REACT_APP_API}/api/pedidos/${id}/`, form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
     })
@@ -67,7 +67,7 @@ export const rejectRequest = (formValues, id) => (dispatch) => {
   form.append('status', 'rejected');
   form.append('response', formValues.response);
   axios
-    .patch(`${process.env.API}/api/pedidos/${id}/`, form, config)
+    .patch(`${process.env.REACT_APP_API}/api/pedidos/${id}/`, form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
     })

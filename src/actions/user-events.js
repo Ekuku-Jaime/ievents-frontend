@@ -8,7 +8,7 @@ export const getUserEvents = () => (dispatch) => {
     }
   };
   axios
-    .get(`${process.env.API}/api/user_events/`, config)
+    .get(`${process.env.REACT_APP_API}/api/user_events/`, config)
     .then((response) => {
       dispatch({ type: USER_EVENT_LOADED, payload: response.data });
     })
@@ -27,7 +27,7 @@ export const addUserEvent = (event, user) => (dispatch) => {
   form.append('user', Number(user));
   form.append('evento', Number(event));
   axios
-    .post(`${process.env.API}/api/event_post/`, form, config)
+    .post(`${process.env.REACT_APP_API}/api/event_post/`, form, config)
     .then((response) => {
       dispatch({ type: USER_EVENT_ADDED_SUCCESS, payload: response.data });
     })
