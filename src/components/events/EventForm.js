@@ -114,7 +114,7 @@ export default function EventForm() {
             <Stack spacing={3}>
               <TextField
                 fullWidth
-                label="Title"
+                label="Titulo"
                 {...getFieldProps('title')}
                 error={Boolean(touched.title && errors.title)}
                 helperText={touched.title && errors.title}
