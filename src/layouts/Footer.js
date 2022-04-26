@@ -31,7 +31,7 @@ export default function Footer({ value }) {
             />
             <BottomNavigationAction
               component={RouterLink}
-              to="/myevents"
+              to="/meuseventos"
               label="Eventos"
               icon={<EventNote />}
             />

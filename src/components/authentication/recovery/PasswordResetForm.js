@@ -6,10 +6,19 @@ import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Navigate, useParams } from 'react-router-dom';
+
+import { authActions } from '../../../actions';
 
 export default function PasswordResetForm() {
+  const dispatch = useDispatch();
+  const { resetPasswordConfirm } = bindActionCreators(authActions, dispatch);
   const [showPassword, setShowPassword] = useState(false);
-
+  const params = useParams();
+  const { uid } = params;
+  const { token } = params;
   const LoginSchema = Yup.object().shape({
     password: Yup.string().required('Escreva a senha'),
     passwordConfirmation: Yup.string()
@@ -25,7 +34,8 @@ export default function PasswordResetForm() {
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
       setTimeout(() => {
-        // setSubmitting(false);
+        resetPasswordConfirm(uid, token, values.password, values.passwordConfirmation);
+        <Navigate to="login" />;
       }, 500);
     }
   });

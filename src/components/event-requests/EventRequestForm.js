@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { authActions, requestActions } from '../../actions';
+import { requestActions } from '../../actions';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   input: {
     height: 120
   }

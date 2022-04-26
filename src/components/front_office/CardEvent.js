@@ -133,7 +133,7 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
   const dispatch = useDispatch();
 
   const { addUserEvent } = bindActionCreators(userEventsActions, dispatch);
-
+  // check if event is already asinged to the user
   const checkEvent = (id) => {
     const even = userEvents.filter((eve) => eve?.evento.id === id && eve?.user === user);
 
@@ -142,10 +142,22 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
     }
     return false;
   };
+  const initialDate = new Date(event.initial_date);
+  const endDate = new Date(event.end_date);
+  // check if has same day and month
+  const isSameDay = () => {
+    if (
+      initialDate.getMonth() === endDate.getMonth() &&
+      initialDate.getDay() === endDate.getDay()
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <Card className={styles.root}>
-      <CardMedia className={styles.media} image={event.image} />
+      <CardMedia component="img" className={styles.media} image={event.image} width="300px" />
       <CardContent>
         {/* <TextInfoContent */}
         {/* classes={contentStyles} */}{' '}
@@ -153,7 +165,8 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
           {event.title}
         </Typography>
         <div style={{ color: '#e64a19', fontSize: '0.8rem' }}>
-          {moment(event.initial_date).format('lll')}-{moment(event.end_date).format('lll')}
+          {moment(event.initial_date).format('lll')}-
+          {isSameDay() ? moment(event.end_date).format('LT') : moment(event.end_date).format('lll')}
         </div>
         <Button
           variant="contained"

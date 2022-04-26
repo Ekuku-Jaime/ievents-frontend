@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { Container, Paper, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Background, Parallax } from 'react-parallax';
-// import { Parallax } from 'react-scroll-parallax';
 import { makeStyles } from '@mui/styles';
 import MobileEvent from '../components/front_office/display/MobileEvent';
 import TabDeskEvent from '../components/front_office/display/TabDeskEvent';
@@ -12,9 +10,10 @@ import TabOnly from '../components/front_office/display/TabOnly';
 import { eventActions, userEventsActions } from '../actions/index';
 import Layout from '../components/front_office/Layout';
 import Footer from '../layouts/Footer';
-import Langing from './Langing';
+import HomeHeader from './HomeHeader';
+import { MHidden } from '../components/@material-extend';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ breakpoints }) => ({
   root: {
     background: 'transparent',
     color: '#fff',
@@ -26,19 +25,29 @@ const useStyles = makeStyles({
   },
   text: {
     fontFamily: 'sans-serif',
-    textAlign: 'center'
+    textAlign: 'center',
+    boxShadow: '10px'
   },
   footer: {
-    height: '10vh',
-    margin: 'auto',
-    background: '#ff5722',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center'
+    [breakpoints.up('sm')]: {
+      height: '10vh',
+
+      background: '#ff5722',
+      textAlign: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+      WebkitBoxShadow: '20px',
+      mozBoxShadow: '20px',
+      boxShadow: '20px',
+      '& p': {
+        margin: 'auto',
+        color: '#fff',
+        fontSize: '1.2rem'
+      }
+    }
   }
-});
+}));
 export default function Home() {
-  // const [user, setUser]
   const styles = useStyles();
   const dispatch = useDispatch();
   const { getEvents } = bindActionCreators(eventActions, dispatch);
@@ -57,17 +66,8 @@ export default function Home() {
   return (
     <>
       <Layout />
-      <Langing />
+      <HomeHeader style={{ marginTop: '100px' }} />
       <Container sx={{ mt: 4 }}>
-        {/* <Parallax
-          bgImage="/static/mock-images/covers/main.jpg"
-          strength={200}
-          bgImageStyle={{ height: '100%', width: '90%' }}
-        >
-          <div style={{ height: 500 }}>
-            <div className={styles.root}>Bem vindo ao nossos website eventos</div>
-          </div>
-        </Parallax> */}
         <Typography sx={{ textAlign: 'center', fontSize: '2rem', color: 'text.secondary' }}>
           Proximos Eventos
         </Typography>
@@ -86,10 +86,7 @@ export default function Home() {
           />
         </div>
       </Container>
-      {/* this footer is for large devices */}
-      <footer className={styles.footer}>
-        <div>ISCIM - Todos direitos reservados - 2022</div>
-      </footer>
+
       <MobileEvent
         events={events}
         user={user?.id}
@@ -98,6 +95,12 @@ export default function Home() {
       />
       {/* this footer is only aplied on mobile devices */}
       <Footer value={0} />
+      {/* this footer is for large devices */}
+      <MHidden width="mdDown">
+        <footer className={styles.footer}>
+          <p>ISCIM - Todos direitos reservados - 2022</p>
+        </footer>
+      </MHidden>
     </>
   );
 }

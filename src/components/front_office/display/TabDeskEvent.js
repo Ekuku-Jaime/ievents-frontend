@@ -15,6 +15,7 @@ function isEmpty(event) {
   }
   return true;
 }
+
 export default function TabDeskEvent({ events, user, userEvents, isAuthenticated }) {
   // const user = useSelector((state) => state.auth.user);
 

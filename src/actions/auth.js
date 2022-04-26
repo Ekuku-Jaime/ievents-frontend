@@ -1,5 +1,6 @@
+/* eslint-disable camelcase */
 import axios from 'axios';
-import { returnError } from './messages';
+import { createMessage, returnError } from './messages';
 import {
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
@@ -11,7 +12,11 @@ import {
   SIGNUP_FAIL,
   AUTHENTICATED_SUCCESS,
   AUTHENTICATED_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  PASSWORD_RESET_SUCCESS,
+  PASSWORD_RESET_FAIL,
+  PASSWORD_RESET_CONFIRM_SUCCESS,
+  PASSWORD_RESET_CONFIRM_FAIL
 } from './types';
 
 export const loadUser = () => (dispatch) => {
@@ -75,7 +80,6 @@ export const login = (values) => async (dispatch) => {
         dispatch(returnError(error.response.data, error.response.status));
       });
   } catch (error) {
-    // console.log(body);
     console.log(error.data);
   }
 };
@@ -120,7 +124,6 @@ export const accessConfig = (getState) => {
   if (access) {
     config.headers.Authorization = `JWT ${access}`;
   }
-  console.log(config.headers);
   return config.headers;
 };
 
@@ -173,3 +176,44 @@ export const checkAuthenticated = () => async (dispatch) => {
       });
   }
 };
+
+export const resetPassword = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({ email });
+
+  try {
+    await axios.post('http://localhost:8000/auth/users/reset_password/', body, config);
+    dispatch({
+      type: PASSWORD_RESET_SUCCESS
+    });
+  } catch (error) {
+    dispatch({
+      type: PASSWORD_RESET_FAIL
+    });
+    dispatch(returnError(error.response.data, error.response.status));
+  }
+};
+export const resetPasswordConfirm =
+  (uid, token, new_password, re_new_password) => async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const body = JSON.stringify({ uid, token, new_password, re_new_password });
+
+    try {
+      await axios.post('http://localhost:8000/auth/users/reset_password_confirm/', body, config);
+      dispatch({
+        type: PASSWORD_RESET_CONFIRM_SUCCESS
+      });
+    } catch (error) {
+      dispatch({
+        type: PASSWORD_RESET_CONFIRM_FAIL
+      });
+    }
+  };

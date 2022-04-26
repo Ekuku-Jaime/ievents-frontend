@@ -10,7 +10,7 @@ export const getEvents = () => (dispatch) => {
     }
   };
   axios
-    .get('http://localhost:8000/api/events/', config)
+    .get(`${process.env.API}/api/events/`, config)
     .then((response) => {
       dispatch({ type: GET_EVENTS, payload: response.data });
     })
@@ -37,7 +37,7 @@ export const addEvent = (formValues) => (dispatch) => {
     }
   };
   axios
-    .post('http://localhost:8000/api/events/', formData, config)
+    .post(`${process.env.API}/api/events/`, formData, config)
     .then((response) => {
       dispatch({ type: ADD_EVENT, payload: response.data });
     })

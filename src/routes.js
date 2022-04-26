@@ -20,7 +20,8 @@ import MyEvents from './components/front_office/MyEvents';
 import EventRequest from './pages/EventRequest';
 import EmailConfirm from './pages/EmailConfirm';
 import PasswordReset from './pages/PasswordReset';
-import Langing from './pages/Langing';
+import StudentEventDetail from './components/front_office/StudentEventDetail';
+import Activate from './components/authentication/Activate';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +36,7 @@ export default function Router() {
       children: [
         // { element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
-        { path: 'events', element: <EventList /> },
+        { path: 'events', element: isAuthenticated ? <EventList /> : <Navigate to="/login" /> },
         { path: 'events/requests', element: <EventsRequests /> },
         { path: 'events/new', element: <EventRegister /> },
         { path: 'events/detail/:id', element: <EventDetail /> }
@@ -51,11 +52,13 @@ export default function Router() {
         { path: 'pedido', element: isAuthenticated ? <EventRequest /> : <Navigate to="/login" /> },
         { path: 'meuseventos', element: isAuthenticated ? <MyEvents /> : <Navigate to="/login" /> },
         { path: '*', element: <NotFound /> },
-        { path: 'home', element: <Langing /> },
+        { path: 'event/detail/:id', element: <StudentEventDetail /> },
+        { path: 'home', element: <Home /> },
+        { path: 'home', element: <Home /> },
         { path: 'passwordreset', element: <EmailConfirm /> },
-        { path: 'createnewpassword', element: <PasswordReset /> }
+        { path: 'passwordconfirm/:uid/:token', element: <PasswordReset /> },
+        { path: 'activate/:uid/:token', element: <Activate /> }
       ]
-    },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    }
   ]);
 }

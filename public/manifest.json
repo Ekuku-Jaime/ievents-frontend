@@ -1,6 +1,6 @@
 {
-  "short_name": "Minimal App",
-  "name": "React Material Minimal UI Kit",
+  "short_name": "ISCIM Events",
+  "name": "App for iscim events",
   "icons": [
     {
       "src": "favicon/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "http://localhost:3000/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"

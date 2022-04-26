@@ -3,8 +3,17 @@ import { Stack, TextField } from '@mui/material';
 import { Form, FormikProvider, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LoadingButton } from '@mui/lab';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Navigate } from 'react-router-dom';
+import { useAlert } from 'react-alert';
+import { authActions } from '../../../actions';
 
 export default function EmailConfirmForm() {
+  const dispatch = useDispatch();
+  const { resetPassword } = bindActionCreators(authActions, dispatch);
+  const err = useSelector((state) => state.errors);
+  const alert = useAlert();
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
       .email('O enderenco de elecronico deve ser valido')
@@ -18,8 +27,15 @@ export default function EmailConfirmForm() {
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
       setTimeout(() => {
-        console.log();
+        resetPassword(values);
+        if (!err) {
+          <Navigate to="passwordconfirm" />;
+        }
+        // setSubmitting(true);
       }, 500);
+
+      alert.error('Email incorrecto');
+      setSubmitting(false);
     }
   });
 

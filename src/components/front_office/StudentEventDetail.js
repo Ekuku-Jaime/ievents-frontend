@@ -28,6 +28,7 @@ export default function StudentEventDetail() {
   const evento = useSelector((state) => state.events);
   //   const imagens = images?.filter((img) => img.evento === 3);
   moment.locale('pt');
+
   return (
     <Page title="Detalhes do evento |Ievents">
       <Layout />
