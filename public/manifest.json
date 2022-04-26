@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "http://localhost:3000/",
+  "start_url": "https://6267faa845bcea40555f3951--legendary-churros-663f82.netlify.app//",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
