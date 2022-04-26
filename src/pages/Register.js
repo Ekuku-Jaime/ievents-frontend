@@ -41,7 +41,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   return (
-    <RootStyle title="Register | Minimal-UI">
+    <RootStyle title="Register | Iscim">
       <AuthLayout>
         Ja tem uma conta? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">

@@ -12,6 +12,7 @@ import Layout from '../components/front_office/Layout';
 import Footer from '../layouts/Footer';
 import HomeHeader from './HomeHeader';
 import { MHidden } from '../components/@material-extend';
+import Page from '../components/Page';
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   root: {
@@ -64,9 +65,9 @@ export default function Home() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
-    <>
+    <Page title="Register | Iscim">
       <Layout />
-      <HomeHeader style={{ marginTop: '100px' }} />
+      <HomeHeader />
       <Container sx={{ mt: 4 }}>
         <Typography sx={{ textAlign: 'center', fontSize: '2rem', color: 'text.secondary' }}>
           Proximos Eventos
@@ -101,6 +102,6 @@ export default function Home() {
           <p>ISCIM - Todos direitos reservados - 2022</p>
         </footer>
       </MHidden>
-    </>
+    </Page>
   );
 }

@@ -57,7 +57,7 @@ export default function Login() {
   }, [isAuthenticated]);
 
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login | Iscim">
       <AuthLayout>
         Nao tem uma conta? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
