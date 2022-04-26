@@ -92,7 +92,7 @@ export default function EventForm() {
         addEvent(values);
         setSubmitting(false);
       }, 500);
-      navigate('/events', { replace: true });
+      navigate('events');
     }
   });
 

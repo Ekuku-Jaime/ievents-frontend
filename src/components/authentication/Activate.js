@@ -21,8 +21,10 @@ export default function Activate() {
   const verifyAccount = (e) => {
     const { uid } = params;
     const { token } = params;
+    setTimeout(() => {
+      verify(uid, token);
+    }, 1000);
 
-    verify(uid, token);
     setVerified(true);
   };
   const navigate = useNavigate();
