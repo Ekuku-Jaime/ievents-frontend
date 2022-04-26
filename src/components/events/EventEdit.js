@@ -68,7 +68,7 @@ export default function EventEdit({ id }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/api/events/${id}`)
+      .get(`${process.env.API}/api/events/${id}`)
       .then((res) => {
         const { title, description, studentName, image, type, initialDate, endDate, panelist } =
           res.data;

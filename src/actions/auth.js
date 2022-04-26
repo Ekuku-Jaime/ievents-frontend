@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { createMessage, returnError } from './messages';
+import { returnError } from './messages';
 import {
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
@@ -29,7 +29,7 @@ export const loadUser = () => (dispatch) => {
   };
   try {
     axios
-      .get('http://localhost:8000/auth/users/me/', config)
+      .get(`${process.env.API}/auth/users/me/`, config)
       .then((response) => {
         dispatch({
           type: USER_LOADED_SUCCESS,
@@ -65,7 +65,7 @@ export const login = (values) => async (dispatch) => {
   // const body = JSON.stringify({ email, password });
   try {
     axios
-      .post('http://localhost:8000/auth/jwt/create/', fd, config)
+      .post(`${process.env.API}/auth/jwt/create/`, fd, config)
       .then((response) => {
         dispatch({
           type: LOGIN_SUCCESS,
@@ -94,7 +94,7 @@ export const register = (values) => async (dispatch) => {
   const body = JSON.stringify(values);
   try {
     axios
-      .post('http://localhost:8000/auth/users/', body, config)
+      .post(`${process.env.API}/auth/users/`, body, config)
       .then((response) => {
         dispatch({
           type: SIGNUP_SUCCESS,
@@ -137,7 +137,7 @@ export const verify = (uid, token) => async (dispatch) => {
   };
   const body = JSON.stringify({ uid, token });
   await axios
-    .post('http://localhost:8000/auth/users/activation/', body, config)
+    .post(`${process.env.API}/auth/users/activation/`, body, config)
     .then(() => {
       dispatch({
         type: ACTIVATION_SUCCESS
@@ -161,7 +161,7 @@ export const checkAuthenticated = () => async (dispatch) => {
     };
     const body = JSON.stringify({ token: localStorage.getItem('access') });
     await axios
-      .post('http://localhost:8000/auth/jwt/verify/', body, config)
+      .post(`${process.env.API}/auth/jwt/verify/`, body, config)
       .then((response) => {
         if (response.data.code !== 'token_not_valid') {
           dispatch({
@@ -186,7 +186,7 @@ export const resetPassword = (email) => async (dispatch) => {
   const body = JSON.stringify({ email });
 
   try {
-    await axios.post('http://localhost:8000/auth/users/reset_password/', body, config);
+    await axios.post(`${process.env.API}/auth/users/reset_password/`, body, config);
     dispatch({
       type: PASSWORD_RESET_SUCCESS
     });
@@ -207,7 +207,7 @@ export const resetPasswordConfirm =
     const body = JSON.stringify({ uid, token, new_password, re_new_password });
 
     try {
-      await axios.post('http://localhost:8000/auth/users/reset_password_confirm/', body, config);
+      await axios.post(`${process.env.API}/auth/users/reset_password_confirm/`, body, config);
       dispatch({
         type: PASSWORD_RESET_CONFIRM_SUCCESS
       });

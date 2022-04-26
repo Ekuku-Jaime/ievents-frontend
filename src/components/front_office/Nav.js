@@ -12,11 +12,10 @@ import {
   Tooltip,
   Typography
 } from '@mui/material';
-import React, { Fragment } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
+import React from 'react';
 import { makeStyles } from '@mui/styles';
 import styled from '@emotion/styled';
-import { ExitToApp, Login as LoginIcon, Logout, Person } from '@mui/icons-material';
+import { Login as LoginIcon, Person } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -37,7 +36,6 @@ const useStyles = makeStyles(() => ({
     transform: 'translateZ(0)'
   }
 }));
-const DRAWER_WIDTH = 380;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
@@ -82,18 +80,11 @@ const ResponsiveAppBar = () => {
       </Typography>
     </MenuItem>
   );
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {

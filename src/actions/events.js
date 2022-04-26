@@ -52,7 +52,7 @@ export const getEvent = (id) => (dispatch) => {
     }
   };
   axios
-    .get(`http://localhost:8000/api/events/${id}`, config)
+    .get(`${process.env.API}/api/events/${id}`, config)
     .then((response) => {
       dispatch({
         type: GET_EVENT,
@@ -69,7 +69,7 @@ export const deleteEvent = (id) => (dispatch) => {
     }
   };
   axios
-    .delete(`http://localhost:8000/api/events/${id}`, config)
+    .delete(`${process.env.API}/api/events/${id}`, config)
     .then(() => {
       dispatch({
         type: DELETE_EVENT
@@ -96,7 +96,7 @@ export const editEvent = (id, formValues) => (dispatch) => {
   formData.append('local', formValues.local);
   formData.append('type', formValues.type);
   axios
-    .patch(`http://localhost:8000/api/events/${id}/`, formData, config)
+    .patch(`${process.env.API}/api/events/${id}/`, formData, config)
     .then((response) => {
       dispatch({
         type: EDIT_EVENT,

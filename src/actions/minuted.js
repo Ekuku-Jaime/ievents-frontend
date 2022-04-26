@@ -13,7 +13,7 @@ export const getMinuteds = () => (dispatch) => {
     }
   };
   axios
-    .get('http://localhost:8000/api/acta/', config)
+    .get(`${process.env.API}/api/acta/`, config)
     .then((response) => {
       dispatch({ type: MINUTED_LOADED_SUCCESS, payload: response.data });
     })
@@ -38,7 +38,7 @@ export const addMinuted = (formValues, event) => (dispatch) => {
     form.append('minuted', file);
   });
   axios
-    .post('http://localhost:8000/api/acta/', form, config)
+    .post(`${process.env.API}/api/acta/`, form, config)
     .then((response) => {
       dispatch({ type: MINUTED_CREATE_SUCCESS, payload: response.data });
     })
