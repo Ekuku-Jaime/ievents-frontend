@@ -18,6 +18,7 @@ import { styled } from '@mui/styles';
 import { userEventsActions } from '../../actions';
 import Layout from './Layout';
 import Page from '../Page';
+import Footer from '../../layouts/Footer';
 
 const ContentStyle = styled('div')(({ theme }) => ({
   maxWidth: 880,
@@ -102,6 +103,7 @@ export default function MyEvents() {
           </Paper>
         </CardStyled>
       </ContentStyle>
+      <Footer value={1} />
     </Page>
   );
 }
