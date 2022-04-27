@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { styled } from '@mui/styles';
-import { authActions, userEventsActions } from '../../actions';
+import { userEventsActions } from '../../actions';
 import Layout from './Layout';
 import Page from '../Page';
 
@@ -38,7 +38,7 @@ export default function MyEvents() {
   const dispatch = useDispatch();
 
   const { getUserEvents } = bindActionCreators(userEventsActions, dispatch);
-  // const { getUser } = bindActionCreators(authActions, dispatch);
+
   const user = useSelector((state) => state.auth.user);
   const events = useSelector((state) => state.userEvents.eventsUser);
 

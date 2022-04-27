@@ -154,10 +154,11 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
     }
     return false;
   };
-
+  const today = new Date();
+  const eventDate = (date) => new Date(date);
   return (
     <Card className={styles.root}>
-      <CardMedia component="img" className={styles.media} image={event.image} width="300px" />
+      <CardMedia className={styles.media} image={event.image} width="300px" />
       <CardContent>
         {/* <TextInfoContent */}
         {/* classes={contentStyles} */}{' '}
@@ -178,29 +179,34 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
           Ver Mais
         </Button>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Tooltip title="guardar no calendario">
-            <IconButton
-              color="primary"
-              onClick={() => {
-                if (checkEvent(event.id) === true) {
-                  alert.error('Ja adicionou este evento');
-                }
-                if (isAuthenticated === false) {
-                  setTimeout(() => {
-                    alert.error('por favor autentique-se primeiro');
-                  }, 500);
-                  navigate('/login', { replace: true });
-                } else if (checkEvent(event.id) === false && isAuthenticated === true) {
-                  setTimeout(() => {
-                    addUserEvent(Number(event.id), user);
-                  }, 300);
-                  alert.success('Evento adicionado com sucesso');
-                }
-              }}
-            >
-              <AddBox fontSize="large" />
-            </IconButton>
-          </Tooltip>
+          {today > eventDate(event.end_date) ? (
+            ''
+          ) : (
+            <Tooltip title="guardar no calendario">
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  if (checkEvent(event.id) === true) {
+                    alert.error('Ja adicionou este evento');
+                  }
+                  if (isAuthenticated === false) {
+                    setTimeout(() => {
+                      alert.error('por favor autentique-se primeiro');
+                    }, 500);
+                    navigate('/login', { replace: true });
+                  } else if (checkEvent(event.id) === false && isAuthenticated === true) {
+                    setTimeout(() => {
+                      addUserEvent(Number(event.id), user);
+                    }, 300);
+                    alert.success('Evento adicionado com sucesso');
+                  }
+                }}
+              >
+                <AddBox fontSize="large" />
+              </IconButton>
+            </Tooltip>
+          )}
+
           <Tooltip title="partilhar">
             <WhatsappShareButton url="https://6267faa845bcea40555f3951--legendary-churros-663f82.netlify.app">
               <WhatsappIcon size={36} round />

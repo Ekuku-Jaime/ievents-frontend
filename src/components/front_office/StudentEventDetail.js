@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { CalendarToday, Event, LocationOn, Person, TimelapseOutlined } from '@mui/icons-material';
-import { Container, Divider, Grid, Paper, Typography } from '@mui/material';
+import { Container, Divider, Grid, ImageListItem, Paper, Typography } from '@mui/material';
 import { Image } from 'mui-image';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +14,10 @@ import Footer from '../../layouts/Footer';
 
 export default function StudentEventDetail() {
   const dispatch = useDispatch();
-  //   const { addEventImages, getImages } = bindActionCreators(imageActions, dispatch);
-  const { getEvent } = bindActionCreators(eventActions, dispatch);
   const params = useParams();
+  const { getEvent } = bindActionCreators(eventActions, dispatch);
+  const images = useSelector((state) => state.images.images);
+  const imagens = images?.filter((img) => img.evento === Number(params.id));
 
   useEffect(() => {
     getEvent(params.id);
@@ -91,6 +92,30 @@ export default function StudentEventDetail() {
               <Typography textAlign="justify">{evento[params.id]?.description}</Typography>
             </Grid>
           </Grid>
+          {imagens.length > 0 ? (
+            <Typography
+              variant="h4"
+              sx={{ mt: 3, textAlign: 'center', color: 'text.secondary', mb: 2 }}
+            >
+              Imagens do evento
+            </Typography>
+          ) : (
+            <Typography
+              variant="h4"
+              sx={{ mt: 3, textAlign: 'center', color: 'text.secondary', mb: 2 }}
+            >
+              Ainda não se adicionou imagens
+            </Typography>
+          )}
+
+          <ImageGalleryList sx={{ width: 500, height: 450, mb: 2 }} cols={3} rowHeight={164}>
+            {imagens &&
+              imagens.map((item) => (
+                <ImageListItem key={item.id}>
+                  <img src={item.image} srcSet={item.image} alt="imagem do evento" loading="lazy" />
+                </ImageListItem>
+              ))}
+          </ImageGalleryList>
         </Paper>
 
         <Paper elevation={3} />
@@ -109,3 +134,19 @@ const DetailDesc = styled('div')({
     paddingLeft: '10px'
   }
 });
+
+const ImageGalleryList = styled('ul')(({ theme }) => ({
+  display: 'grid',
+  padding: 0,
+  margin: theme.spacing(0, 4),
+  gap: 8,
+  [theme.breakpoints.up('sm')]: {
+    gridTemplateColumns: 'repeat(2, 1fr)'
+  },
+  [theme.breakpoints.up('md')]: {
+    gridTemplateColumns: 'repeat(4, 1fr)'
+  },
+  [theme.breakpoints.up('lg')]: {
+    gridTemplateColumns: 'repeat(4, 1fr)'
+  }
+}));

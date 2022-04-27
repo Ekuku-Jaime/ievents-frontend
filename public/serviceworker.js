@@ -1,39 +1,63 @@
-const CACHE_NAME = 'version-1';
-const urlsToCache = ['index.html', 'offline.html'];
+const CACHE_VERSION = 10;
+const CURRENT_CACHE = `main-${CACHE_VERSION}`;
 
+// these are the routes we are going to cache for offline support
+const cacheFiles = ['/', '/meuseventos/', '/offline/'];
 const self = this;
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('opened cache');
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches
-      .match(event.request)
-      .then(() => fetch(event.request).catch(() => caches.match('offline.html')))
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  const cacheWhitelist = [];
-  cacheWhitelist.push(CACHE_NAME);
-  event.waitUntil(
+// on activation we clean up the previously registered service workers
+self.addEventListener('activate', (evt) =>
+  evt.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(
         // eslint-disable-next-line consistent-return
         // eslint-disable-next-line array-callback-return
         cacheNames.map((cacheName) => {
-          if (!cacheWhitelist.includes(cacheName)) {
+          if (cacheName !== CURRENT_CACHE) {
             return caches.delete(cacheName);
           }
         })
       )
     )
-  );
+  )
+);
+
+// on install we download the routes we want to cache for offline
+self.addEventListener('install', (evt) =>
+  evt.waitUntil(
+    // eslint-disable-next-line arrow-body-style
+    caches.open(CURRENT_CACHE).then((cache) => {
+      return cache.addAll(cacheFiles);
+    })
+  )
+);
+
+// fetch the resource from the network
+const fromNetwork = (request, timeout) =>
+  new Promise((fulfill, reject) => {
+    const timeoutId = setTimeout(reject, timeout);
+    fetch(request).then((response) => {
+      clearTimeout(timeoutId);
+      fulfill(response);
+      update(request);
+    }, reject);
+  });
+
+// fetch the resource from the browser cache
+const fromCache = (request) =>
+  caches
+    .open(CURRENT_CACHE)
+    .then((cache) => cache.match(request).then((matching) => matching || cache.match('/offline/')));
+
+// cache the current page to make it available for offline
+const update = (request) =>
+  caches
+    .open(CURRENT_CACHE)
+    .then((cache) => fetch(request).then((response) => cache.put(request, response)));
+
+// general strategy when making a request (eg if online try to fetch it
+// from the network with a timeout, if something fails serve from cache)
+self.addEventListener('fetch', (evt) => {
+  evt.respondWith(fromNetwork(evt.request, 10000).catch(() => fromCache(evt.request)));
+  evt.waitUntil(update(evt.request));
 });

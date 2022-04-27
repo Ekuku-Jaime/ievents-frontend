@@ -21,6 +21,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { MHidden } from '../@material-extend';
 import { authActions } from '../../actions';
+import Logo from '../Logo';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -98,20 +99,17 @@ const ResponsiveAppBar = () => {
       <MHidden width="mdDown">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            >
-              <img src="../favicon/android-chrome-192x192.png" alt="logo" className={styles.logo} />
-            </Typography>
+            <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <Box component={RouterLink} to="/" sx={{ display: 'inline-flex' }}>
+                <Logo />
+              </Box>
+            </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button
                 sx={{ my: 2, display: 'block', fontSize: '1.2rem' }}
                 component={RouterLink}
-                to="/myevents"
+                to="/meuseventos"
               >
                 Meus eventos
               </Button>

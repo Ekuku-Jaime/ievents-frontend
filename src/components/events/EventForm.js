@@ -82,7 +82,7 @@ export default function EventForm() {
       image: '',
       type: '',
       initialDate: '',
-      endDate: null,
+      endDate: '',
       panelist: '',
       local: ''
     },
@@ -250,34 +250,7 @@ export default function EventForm() {
                   helperText={touched.title && errors.title}
                 />
               )}
-              {formik.values.type === 'Graduacao' && (
-                <TextField
-                  fullWidth
-                  label="Local do evento"
-                  {...getFieldProps('local')}
-                  error={Boolean(touched.local && errors.local)}
-                  helperText={touched.local && errors.local}
-                />
-              )}
-              {formik.values.type === 'Seminario' && (
-                <DateTimePicker
-                  label="Data do termino"
-                  onChange={(val) => {
-                    const date = moment(val).format();
 
-                    formik.setFieldValue('endDate', date);
-                  }}
-                  value={formik.values.endDate}
-                  renderInput={(params) => (
-                    <TextField
-                      fullWidth
-                      {...params}
-                      error={Boolean(touched.endDate && errors.endDate)}
-                      helperText={touched.endDate && errors.endDate}
-                    />
-                  )}
-                />
-              )}
               <LoadingButton
                 fullWidth
                 size="large"
