@@ -40,6 +40,7 @@ export const addEvent = (formValues) => (dispatch) => {
     .post(`${process.env.REACT_APP_API}/api/events/`, formData, config)
     .then((response) => {
       dispatch({ type: ADD_EVENT, payload: response.data });
+      dispatch(createMessage({ eventCreated: 'Evento criado com sucesso' }));
     })
     .catch((error) => error.response.data);
 };

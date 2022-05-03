@@ -31,14 +31,29 @@ function Alerts({ alert }) {
   //   }
   // }
   if (msg !== 'undefined') {
-    if (msg?.diaryAdded) {
-      alert.success(msg.diaryAdded);
+    if (msg?.eventCreated) {
+      alert.success(msg.eventCreated);
     }
     if (msg?.eventDeleted) {
       alert.success(msg.eventDeleted);
     }
     if (msg?.requestLoaded) {
       alert.success(msg.requestLoaded);
+    }
+    if (msg?.requested) {
+      alert.success(msg.requested);
+    }
+    if (msg?.requestAccepted) {
+      alert.success(msg.requestAccepted);
+    }
+    if (msg?.requestRejected) {
+      alert.success(msg.requestRejected);
+    }
+    if (msg?.imagesAdded) {
+      alert.success(msg.imagesAdded);
+    }
+    if (msg?.minutedAdded) {
+      alert.success(msg.minutedAdded);
     }
   }
 

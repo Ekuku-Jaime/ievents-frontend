@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createMessage } from './messages';
 import {
   MINUTED_CREATE_FAIL,
   MINUTED_CREATE_SUCCESS,
@@ -41,6 +42,7 @@ export const addMinuted = (formValues, event) => (dispatch) => {
     .post(`${process.env.API}/api/acta/`, form, config)
     .then((response) => {
       dispatch({ type: MINUTED_CREATE_SUCCESS, payload: response.data });
+      dispatch(createMessage({ minutedAdded: 'Acta adicionada com sucesso' }));
     })
     .catch((error) => {
       dispatch({ type: MINUTED_CREATE_FAIL });

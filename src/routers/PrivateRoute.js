@@ -1,20 +1,25 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
-const useAuth = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+const PrivateRoutes = ({ children, roles }) => {
+  // const auth = useAuth();
+  const location = useLocation();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  if (isAuthenticated) {
-    return true;
+  // eslint-disable-next-line no-unneeded-ternary
+  const userHasRequiredRole = user && roles.includes(user.role) ? true : false;
+  console.log(userHasRequiredRole, 'awu');
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} />;
   }
-  return false;
-};
 
-const PrivateRoutes = (props) => {
-  const auth = useAuth();
+  if (isAuthenticated && !userHasRequiredRole) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
 
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  return children;
 };
 
 export default PrivateRoutes;

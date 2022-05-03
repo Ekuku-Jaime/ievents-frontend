@@ -3,5 +3,6 @@ export const getEventsTypes = () => [
   { id: '2', title: 'Defesa' },
   { id: '3', title: 'Seminario' },
   { id: '4', title: 'Graduacao' },
-  { id: '5', title: 'Jornadas' }
+  { id: '5', title: 'Jornadas' },
+  { id: '6', title: 'Workshop' }
 ];

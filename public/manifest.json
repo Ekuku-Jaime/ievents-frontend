@@ -1,6 +1,6 @@
 {
-  "short_name": "ISCIM Events",
-  "name": "App for iscim events",
+  "short_name": "IEvents",
+  "name": "Eventos",
   "icons": [
     {
       "src": "favicon/android-chrome-192x192.png",

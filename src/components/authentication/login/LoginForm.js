@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import { useEffect, useRef, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -16,7 +16,7 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { authActions } from '../../../actions';
 
@@ -42,11 +42,11 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
+      login(values);
       setTimeout(() => {
-        login(values);
         setSubmitting(false);
         setLoginError(true);
-      }, 500);
+      }, 800);
     }
   });
 

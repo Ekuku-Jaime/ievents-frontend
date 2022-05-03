@@ -151,7 +151,14 @@ export default function Home() {
 
         <TabPanel value1={value1} index={0}>
           <Container>
-            <Typography sx={{ textAlign: 'center', fontSize: '2rem', color: 'text.secondary' }}>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontSize: '2rem',
+                color: 'text.secondary',
+                fontFamily: 'Old Standard TT, serif'
+              }}
+            >
               Proximos Eventos
             </Typography>
             <div style={{ marginTop: '50px' }}>

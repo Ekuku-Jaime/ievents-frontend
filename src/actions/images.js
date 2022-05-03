@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { createMessage } from './messages';
 // import history from 'src/routers/history';
 import { ADD_IMAGE, GET_IMAGES } from './types';
 
@@ -17,7 +18,7 @@ export const addEventImages = (id, formValues) => (dispatch) => {
     .post(`${process.env.REACT_APP_API}/api/images/`, formData, config)
     .then((response) => {
       dispatch({ type: ADD_IMAGE, payload: response.data });
-      console.log('images added');
+      dispatch(createMessage({ imagesAdded: 'Imagens adionadas com sucesso' }));
     })
     .catch((error) => error.response.data);
 };

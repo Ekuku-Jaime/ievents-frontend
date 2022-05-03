@@ -88,11 +88,11 @@ export default function EventForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: (values, { setSubmitting }) => {
+      addEvent(values);
       setTimeout(() => {
-        addEvent(values);
         setSubmitting(false);
-      }, 500);
-      navigate('events');
+        navigate('/dashboard/events');
+      }, 800);
     }
   });
 

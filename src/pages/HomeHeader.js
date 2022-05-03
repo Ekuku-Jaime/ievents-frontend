@@ -39,18 +39,20 @@ export default function HomeHeader() {
   return (
     <Box className={styles.body} sx={{ boxShadow: 1 }}>
       <div className={styles.text}>
-        <div> Ter acesso aos seus enventos nunca foi tao simples </div>
-        {/* <Button variant="contained" sx={{ color: '#ff5722', backgroundColor: '#fff' }}>
-          Ver eventos
-        </Button> */}
+        <div> Ter acesso aos eventos nunca foi tão simples </div>
+
         <div className={styles.link}>
-          <a href="facebook.com">
+          <a href="https://facebook.com/iscim.moz" rel="noopener noreferrer" target="_blank">
             <Facebook />
           </a>
-          <a href="instagram.com">
+          <a
+            href="https://www.instagram.com/explore/locations/222798738/iscim-instituto-superior-de-comunicacao-e-imagem-de-mocambique?hl=pt"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <Instagram />
           </a>
-          <a href="linkedin.com">
+          <a href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
             <LinkedIn />
           </a>
         </div>

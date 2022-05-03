@@ -22,6 +22,7 @@ import EmailConfirm from './pages/EmailConfirm';
 import PasswordReset from './pages/PasswordReset';
 import StudentEventDetail from './components/front_office/StudentEventDetail';
 import Activate from './components/authentication/Activate';
+import PrivateRoutes from './routers/PrivateRoute';
 
 // ----------------------------------------------------------------------
 
@@ -35,11 +36,46 @@ export default function Router() {
       element: isAuthenticated ? <DashboardLayout /> : <Navigate to="/login" />,
       children: [
         // { element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <DashboardApp /> },
-        { path: 'events', element: isAuthenticated ? <EventList /> : <Navigate to="/login" /> },
-        { path: 'events/requests', element: <EventsRequests /> },
-        { path: 'events/new', element: <EventRegister /> },
-        { path: 'events/detail/:id', element: <EventDetail /> }
+        {
+          path: 'app',
+          element: (
+            <PrivateRoutes roles={['Administrador']}>
+              <DashboardApp />
+            </PrivateRoutes>
+          )
+        },
+        {
+          path: 'events',
+          element: (
+            <PrivateRoutes roles={['Administrador']}>
+              <EventList />
+            </PrivateRoutes>
+          )
+        },
+        {
+          path: 'events/requests',
+          element: (
+            <PrivateRoutes roles={['Administrador']}>
+              <EventsRequests />
+            </PrivateRoutes>
+          )
+        },
+        {
+          path: 'events/new',
+          element: (
+            <PrivateRoutes roles={['Administrador']}>
+              <EventRegister />
+            </PrivateRoutes>
+          )
+        },
+        {
+          path: 'events/detail/:id',
+          element: (
+            <PrivateRoutes roles={['Administrador']}>
+              <EventDetail />
+            </PrivateRoutes>
+          )
+        }
       ]
     },
     {
@@ -49,13 +85,29 @@ export default function Router() {
         { path: '/', element: <Home /> },
         { path: 'login', element: <Login /> },
         { path: 'register', element: <Register /> },
-        { path: 'pedido', element: isAuthenticated ? <EventRequest /> : <Navigate to="/login" /> },
-        { path: 'meuseventos', element: isAuthenticated ? <MyEvents /> : <Navigate to="/login" /> },
+        {
+          path: 'pedido',
+          element: (
+            <PrivateRoutes roles={['Student']}>
+              <EventRequest />
+            </PrivateRoutes>
+          )
+        },
+        {
+          path: 'meuseventos',
+          element: (
+            <PrivateRoutes roles={['Student']}>
+              <MyEvents />
+            </PrivateRoutes>
+          )
+        },
         { path: '*', element: <NotFound /> },
         { path: 'event/detail/:id', element: <StudentEventDetail /> },
         { path: 'home', element: <Home /> },
-        { path: 'home', element: <Home /> },
-        { path: 'passwordreset', element: <EmailConfirm /> },
+        {
+          path: 'passwordreset',
+          element: <EmailConfirm />
+        },
         { path: 'passwordconfirm/:uid/:token', element: <PasswordReset /> },
         { path: 'activate/:uid/:token', element: <Activate /> }
       ]

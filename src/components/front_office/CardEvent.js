@@ -20,6 +20,7 @@ import moment from 'moment/min/moment-with-locales';
 import { useAlert } from 'react-alert';
 
 import { userEventsActions } from '../../actions';
+import { truncate } from '../events/services/eventsHelpers';
 
 CardEvent.propTypes = {
   event: PropTypes.object,
@@ -162,7 +163,8 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
       <CardContent>
         {/* <TextInfoContent */}
         {/* classes={contentStyles} */}{' '}
-        <Typography textAlign="justify" fontSize="1.2rem">
+        <Typography textAlign="left" fontSize="1rem">
+          {/* {truncate(event.title, 35)} */}
           {event.title}
         </Typography>
         <div style={{ color: '#e64a19', fontSize: '0.8rem' }}>

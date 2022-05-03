@@ -13,7 +13,6 @@ export const getRequests = () => (dispatch) => {
     .get(`${process.env.REACT_APP_API}/api/getpedidos/`, config)
     .then((response) => {
       dispatch({ type: GET_REQUESTS, payload: response.data });
-      dispatch(createMessage({ requestLoaded: 'requests loaded' }));
     })
     .catch((error) => console.log(error.status));
 };
@@ -52,6 +51,7 @@ export const acceptRequest = (formValues, id) => (dispatch) => {
     .patch(`${process.env.REACT_APP_API}/api/pedidos/${id}/`, form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
+      dispatch(createMessage({ requestAccepted: 'Pedido aceite com sucesso' }));
     })
     .catch((error) => error.response.data);
 };
@@ -70,6 +70,7 @@ export const rejectRequest = (formValues, id) => (dispatch) => {
     .patch(`${process.env.REACT_APP_API}/api/pedidos/${id}/`, form, config)
     .then((response) => {
       dispatch({ type: CREATE_REQUEST, payload: response.data });
+      dispatch(createMessage({ requestRejected: 'Pedido  rejeitado' }));
     })
     .catch((error) => error.response.data);
 };
