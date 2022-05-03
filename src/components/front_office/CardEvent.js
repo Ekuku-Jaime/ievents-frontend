@@ -210,7 +210,7 @@ export default function CardEvent({ event, userEvents, user, isAuthenticated }) 
           )}
 
           <Tooltip title="partilhar">
-            <WhatsappShareButton url="https://6267faa845bcea40555f3951--legendary-churros-663f82.netlify.app">
+            <WhatsappShareButton url={`https://iscimevents.netlify.app/event/detail/${event.id}`}>
               <WhatsappIcon size={36} round />
             </WhatsappShareButton>
           </Tooltip>
