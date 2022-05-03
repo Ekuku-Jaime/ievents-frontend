@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import moment from 'moment/min/moment-with-locales';
-import { eventActions } from '../../actions/index';
+import { eventActions, imageActions } from '../../actions/index';
 import Page from '../Page';
 import Layout from './Layout';
 import Footer from '../../layouts/Footer';
@@ -16,13 +16,14 @@ export default function StudentEventDetail() {
   const dispatch = useDispatch();
   const params = useParams();
   const { getEvent } = bindActionCreators(eventActions, dispatch);
+  const { getImages } = bindActionCreators(imageActions, dispatch);
   const images = useSelector((state) => state.images.images);
   const imagens = images?.filter((img) => img.evento === Number(params.id));
 
   useEffect(() => {
     getEvent(params.id);
 
-    // getImages();
+    getImages();
     // eslint-disable-next-line
   }, []);
   //   const images = useSelector((state) => state.images.images);

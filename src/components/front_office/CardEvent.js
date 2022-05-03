@@ -25,7 +25,7 @@ import { truncate } from '../events/services/eventsHelpers';
 CardEvent.propTypes = {
   event: PropTypes.object,
   user: PropTypes.number,
-  userEvents: PropTypes.array,
+  userEvents: PropTypes.any,
   isAuthenticated: PropTypes.bool
 };
 
