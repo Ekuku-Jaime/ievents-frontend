@@ -29,7 +29,7 @@ const sidebarConfig = [
   },
   {
     title: 'mensagens',
-    path: 'events/requests',
+    path: '/dashboard/events/requests',
     icon: getIcon(fileTextFill)
   }
 ];
