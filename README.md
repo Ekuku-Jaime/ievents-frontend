@@ -1,4 +1,4 @@
-## IEvents [(Visit)](https://minimal-kit-react.vercel.app/)
+## IEvents [(Visit)](https://iscimevents.netlify.app/)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
